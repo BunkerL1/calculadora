@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Lucro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Calculadora de Lucro</h2>
+    <label for="produto">Nome do Produto:</label>
+    <input type="text" id="produto" placeholder="Nome do produto"><br>
+
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" id="quantidade" value="1"><br>
+
+    <label for="gastos">Total de Gastos:</label>
+    <input type="number" id="gastos" placeholder="Total de gastos"><br>
+
+    <label for="porcentagem">Porcentagem de Lucro:</label>
+    <input type="number" id="porcentagem" placeholder="Porcentagem de lucro"><br>
+
+    <button onclick="calcularLucro()">Calcular Lucro</button><br>
+
+    <div id="resultado"></div>
+
+    <button onclick="salvarTxt()">Salvar Texto</button>
+  </div>
+
+  <script>
+    function calcularLucro() {
+      var produto = document.getElementById('produto').value;
+      var quantidade = parseInt(document.getElementById('quantidade').value);
+      var gastos = parseFloat(document.getElementById('gastos').value);
+      var porcentagem = parseFloat(document.getElementById('porcentagem').value);
+
+      var gastosTotal = gastos * quantidade;
+      var lucroTotal = gastosTotal * (porcentagem / 100);
+      var precoVenda = gastosTotal + lucroTotal;
+      var precoPorProduto = precoVenda / quantidade;
+
+      var resultado = `Produto: ${produto}\n`;
+      resultado += `Quantidade: ${quantidade}\n`;
+      resultado += `Gastos: R$ ${gastosTotal.toFixed(2)}\n`;
+      resultado += `Porcentagem de Lucro: ${porcentagem}%\n`;
+      resultado += `Lucro Total: R$ ${lucroTotal.toFixed(2)}\n`;
+      resultado += `Preço de Venda (Total): R$ ${precoVenda.toFixed(2)}\n`;
+      resultado += `Preço de Venda (Por Produto): R$ ${precoPorProduto.toFixed(2)}\n`;
+
+      document.getElementById('resultado').innerText = resultado;
+    }
+
+    function salvarTxt() {
+      var resultadoTxt = document.getElementById('resultado').innerText;
+      var blob = new Blob([resultadoTxt], { type: "text/plain;charset=utf-8" });
+      saveAs(blob, "calculadora_lucro.txt");
+    }
+  </script>
+</body>
+</html>
